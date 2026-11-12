@@ -4,9 +4,9 @@ A lane-defense game. You hold the bottom of the field and fight back toward home
 
 ## Latest build
 
-**1.0.47** for Android. **1.0.45** for Windows.
+**1.0.48** for Android. **1.0.45** for Windows.
 
-- [VectorHold-1.0.47.apk](https://github.com/Jacensolo59/Vector-Hold/releases/tag/v1.0.47)
+- [VectorHold-1.0.48.apk](https://github.com/Jacensolo59/Vector-Hold/releases/tag/v1.0.48)
 - [VectorHold-1.0.45.exe](https://github.com/Jacensolo59/Vector-Hold/releases/tag/v1.0.45)
 
 The Windows file stays on the older release because it is over GitHub's 100 MB commit limit.
