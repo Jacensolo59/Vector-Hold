@@ -1,0 +1,50 @@
+BATTLEFIELD AND RULES
+
+The live field is 12000 long by 1000 wide.
+The document length is 3000, with weapons capped at 2750.
+The live lane is four times that, and every weapon range is scaled by the same
+four, so a railgun still reaches most of the approach. Ships spawn at the top
+and take the full length to reach the hull.
+The whole lane is drawn as open space. There is no gridded panel.
+Stars drift down the view. A faint amber line is the hull, the full width
+of the field, just above the weapon tray.
+On screen the ship is the bottom center of the battle view, pointing up.
+Enemies spawn above it and travel down. World Y grows toward the ship.
+
+Hull and defense
+- A match starts at 100 hull and 5 defense.
+- The document says leveling raises the character's base stats and the weapons.
+  Weapon stats still use the "+ per level" formulas, but the per-level
+  amounts are small. A match level will not outrun the round curve.
+  Hull gains +1 per match level and defense +0.08 per level.
+  Research, not the match level, is what pushes a later run past today's best round.
+
+Damage against defense
+  dealt = raw * (100 / (100 + defense))
+  Defense penetration and laser shred reduce defense before that division.
+  At 0 defense, damage is full. At 100 defense, damage is halved.
+
+Contact
+- The player's hit line is the full width of the field, just above the weapon tray.
+  Circles, squares, triangles, diamonds, and chevrons ram when they reach that line.
+  Mines do not ram. They arm partway down the lane and the blast hits the hull on a fuse.
+  Crosses do not ram or shoot. They stick to the fullest ship and heal it.
+  They do not home on the ship, except the cross. Each other one keeps a lane and weaves.
+- Rectangles stop at their weapon range and shoot on a timer.
+  The document does not give that timer. The default is enemy.fire_interval = 2.2 seconds.
+
+Targeting
+- Railgun, laser, and tesla pick the ship that will hurt the hull soonest.
+  A shooter already in range outranks a rammer that is still far away.
+  A cross outranks ordinary ships, because it is keeping a tank alive.
+  A mine is scored by how soon it will arm, not by when it would reach the hull.
+  Once a mine is armed, killing it does not stop the blast, so guns leave it.
+  A marked ship is preferred by that same score times its hull multiplier.
+- Missiles still prefer the highest hull in range.
+- The laser is sticky. It waits laser.retarget seconds before it will pick a new ship.
+
+Match level cap is 100. XP needed to leave a level is xp.match_base + xp.match_per_level * level.
+Kill XP and gold amounts are not in the document. They live on each enemy as *_xp and *_gold.
+
+Rounds do not end the game. Clear a wave, wait waves.between seconds, and the next round starts.
+The run ends only when the hull breaks.

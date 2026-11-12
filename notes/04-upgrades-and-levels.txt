@@ -1,0 +1,59 @@
+UPGRADES AND MATCH LEVELS
+
+Match XP comes from kills. The bar under the round counter is match XP, not act XP.
+Leaving a level costs xp.match_base + xp.match_per_level * current level.
+The costs are high enough that level 100 is a deep run, not the middle of
+the first one. Every even level still pauses for a card.
+Every even level (2, 4, 6, ...) pauses the field and offers 3 random cards. Pick one.
+If one kill jumps several even levels, the offers queue up one after another.
+The match level cap is 100.
+
+Cards are weighted. A weapon you do not own yet, if your act level allows it, is more
+likely than a rank-up. Each card is unique inside one offer.
+When fewer than 3 real cards exist, the pool is padded with:
+  Patch the Hull   restores utility.heal_frac of max hull (25%)
+  Scavenge         grants utility.gold plus the round number
+  Overclock        +utility.overclock_pct fire rate, up to utility.overclock_max stacks
+
+MAIN CHARACTER / RAILGUN
+  Damage      +25% per rank, max 3
+  Pierce      the bolt hits the first ship for full damage, then up to 1 more ship
+              per rank at 50% of the original damage. Max 3 pierce.
+  Static      the third railgun card. The round is charged. On each hit, it
+              jumps to the nearest ship within 280 for 25% of that hit.
+              Rank 1 jumps once, rank 2 twice, rank 3 three times.
+              It will not jump to a ship that bolt already hit.
+
+MISSILES
+  Larger AoE     +15% explosion radius per rank. Safety cap 8 ranks (upgrades.missile_aoe_max).
+  Faster reload  -1 second per rank, max 3, and never below missile.reload_min.
+  Split          on impact, +2 missiles per rank. Each one homes like a normal
+                 missile. Speed is missile.split_speed, which starts equal to
+                 missile.speed. They are a little smaller, deal 50%, and do not split again.
+
+LASER
+  Attack faster  each rank multiplies the tick interval by laser_rate_factor (0.85).
+  Reflect        each rank bounces the tick to one more ship at 50% damage.
+  Targets explode  one rank. A ship killed by the laser bursts in 150 units
+                   for 50% of that ship's max hull. The burst does not chain.
+
+TESLA
+  Increased damage      +25% per rank
+  Increased targets     +2 ships in the chain per rank
+  Conductive            the third tesla card. While a ship is stunned, every
+                        weapon deals +15% per rank to it. Max 3, so +45%.
+                        The zap that starts the stun counts, and so does
+                        anything that hits before the stun ends.
+
+DRONES
+  Increased damage      +20% per rank, per drone
+  More drones           +2 drones per rank
+  Drone missiles        +1 missile per rank per drone, 75% of a drone shot, 2 second reload
+
+FLAMETHROWER
+  Range          +1000 per rank, hard cap 4000, so 3 ranks fill the live range
+                 (document +250, cap 1000)
+  Damage         +25% per rank
+  Fire width     +10% cone per rank
+
+Ranks reset every match. Research does not.

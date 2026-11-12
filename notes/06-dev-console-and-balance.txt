@@ -1,0 +1,65 @@
+DEV CONSOLE AND BALANCE
+
+This first version keeps a balance console in the build on purpose.
+Open it with the DEV button, or on a keyboard with F1 or the ` key.
+While it is open, a running match pauses so you can edit without dying.
+Closing it resumes the match. New shots, new spawns, and the next damage tick
+use the edited numbers immediately. Ships already on the field keep the hull
+they spawned with.
+
+What is saved
+- Balance overrides: user://balance.json on this device
+- Profile (gold, research, act XP, volume, shake, best round): user://profile.json
+RESET in the console clears overrides only.
+RESET PROGRESS in Settings clears the profile only.
+
+The number rows are four menus. Inside a menu, one group is open at a time.
+  FIELD      battlefield, player, progress, unlocks
+  RESEARCH   research costs, then upgrade cards
+  WEAPONS    railgun, missiles, laser, tesla, drones, flame
+  ENEMIES    hitboxes, enemy stats, waves
+The starting numbers are defaults() in the same file.
+scripts/balance.gd layers overrides on top. Combat never caches a number
+it can read through Balance.getv at the moment it fires.
+
+Handy buttons
+  GOD      hull does not drop
+  RANGES   draws range rings
+  HITS     draws each enemy hitbox. The Hitbox rows set the size.
+           Every enemy shape uses that same outline for shots, including diamond, chevron, cross, and mine.
+  1x 2x 4x simulation speed, not saved
+  +LVL     grants a match level (and an upgrade offer on even levels)
+  HEAL     fill hull
+  KILL     destroy every ship currently alive
+  +GOLD    add 50 meta gold
+  ROUND+   skip to the next round's spawn list
+  CIRCLE, TRIANGLE, RECT, SQUARE, HEX
+  DIAMOND, CHEVRON, CROSS, MINE   spawn one now. A console chevron ignores the Tesla unlock.
+
+The bottom text is the raw override JSON.
+
+Document values that were retuned for a long campaign, 1.0.29
+- Match levels still climb inside one run, but weapon stats no longer explode
+  by level 20. Cards and research are the power, not the level number alone.
+- Act XP is a long curve. Old saves multiply stored act XP by 900 once, so an
+  act you already earned is kept.
+- Each act after 1 adds hull and defense (player.hull_per_act, defense_per_act).
+- Enemy hull compounds (enemy.hp_curve) and bends after enemy.hp_grace rounds.
+- Enemy attack compounds more gently (enemy.atk_curve).
+- Enemy defense, the number under each ship, compounds too (enemy.def_curve).
+- Railgun, laser, and tesla aim by threat: soonest damage to the hull.
+- Railgun penetration is 0.5% per rank, cap 40, so it matters against tanks.
+- Damage research is +2% per rank, cap 80, starting at 350 gold.
+- Speeds are a little higher so a round is a fight, not a long wait.
+- The first boss is survivable. Later bosses, plus the hull bend, are the wall
+  that research is meant to push.
+
+1.0.34 tightens that wall. In-run level damage is smaller, waves grow slower,
+and hull, attack, and defense all climb harder after the opening. A run with
+no research should lose in the teens. Research is how the next run goes further.
+
+If a number feels wrong, change it in the console first. If you want the new
+number to be the default for every fresh device, change defaults() as well.
+The headless check in scripts/self_test.gd locks the document formulas so a
+retune of the code does not silently break round-1 circle hull, railgun level
+scaling, research prices, missile edge 25% to 55%, or stun falloff.

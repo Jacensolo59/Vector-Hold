@@ -1,0 +1,70 @@
+WEAPONS
+
+You start a match with the railgun only. Other weapons are offered as upgrade cards
+once your act level has unlocked them. Order follows the design document:
+
+  Act 1  Railgun, always
+  Act 2  Missiles
+  Act 3  Laser
+  Act 4  Tesla
+  Act 5  Drones
+  Act 6  Flamethrower
+
+Change unlock.* if you want them earlier.
+
+All owned weapons scale with the current match level:
+  stat = base + per_level * (level - 1)
+  fire rate = base * (1 + percent_per_level * (level - 1))
+Level 1 is the written base. Research damage multipliers and in-match upgrade ranks stack on top.
+
+RAILGUN
+  Damage 24 + 3 per level
+  Fire rate 1.20 per second, +1.6% per level
+  Range 11000 on the live 12000 field
+  It aims from the muzzle at where that ship will be when the bolt arrives,
+  then the center bolt keeps that lead while it is in flight. Pierce and static
+  are upgrade cards, not the base gun.
+
+MISSILES
+  Damage 80 + 6 per level
+  Reload 4 seconds
+  Range 11000 on the live 12000 field (document 2750 on a 3000 field)
+  They home, then explode. Damage falls off from 100% at the center to the edge fraction
+  (25% until missile-edge research raises it).
+  "Good against tanks" is why they aim at the highest hull in range.
+
+LASER
+  Damage 22 + 2.2 per level, applied every 0.25 seconds while a target is held
+  Range 10000 on the live field (document 2500)
+  It keeps firing until that ship dies or leaves range, then waits retarget seconds.
+  Over 1 second of focus it removes 40% of the target's defense (laser.shred_cap).
+  Shred fades if the beam moves on.
+
+TESLA
+  Damage 16 + 1.6 per level
+  Fire rate 1.15 per second, +1.2% per level
+  Range 7000 on the live field (document 1750)
+  Hits 3 ships before upgrades. The first is stunned 1.6s.
+  Each later jump loses 0.20s of stun, never below stun_min.
+  A jump only happens if the next ship is within bounce_link (2800) and still in weapon range.
+
+DRONES
+  Start with 2. The document says fast, medium hull, medium defense, low damage.
+  Hull 45 and defense 12 are fills (drone.hp, drone.defense).
+  Damage 6 + 2.2 per level, per drone
+  Fire rate 1.15 per second, +2% per level, per drone
+  Detection range 8000, measured from the player like the other weapons.
+  Attack range 1000, measured from the drone. They only shoot ships in front of them.
+  If nothing is inside the detection range, they return to orbiting the player.
+  Overlapping an enemy still chews their hull. Downed drones relaunch from the ship after drone.respawn seconds.
+  The missile upgrade is separate. See the upgrades note.
+
+FLAMETHROWER
+  Damage 4 + 1.2 per level every 0.25 seconds to every ship in the cone
+  Range starts at 1000 and the upgrade adds 1000, capped at 4000
+  (document 250, plus 250, cap 1000)
+  The base cone angle is flame.half_angle (0.30 radians). That angle is a fill.
+  It only reaches forward.
+
+Overclock, an extra card when the upgrade pool is thin, speeds every weapon's timer.
+It does not raise damage.

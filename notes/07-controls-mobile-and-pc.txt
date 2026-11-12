@@ -1,0 +1,46 @@
+CONTROLS ON MOBILE AND PC
+
+There is no movement. The ship holds the line.
+Touch and mouse both press the same buttons. Targets are at least 44 pixels tall.
+
+Main screen
+  The name sits at the top. The version is the small line under it.
+  A box at the top left holds the act bar, gold, and best round.
+  DEPLOY, RESEARCH, and FIELD NOTES are the smaller buttons under the ship.
+  DEV and SET sit at the right of that top row. SET is volume, shake, and erase.
+
+During a run
+  The field fills the screen down to the weapon tray.
+  Hull, round, gold, match XP, and act XP sit in a clear box at the top left.
+  That box is only a readout. It does not cover the field as its own row.
+  SET or Esc    pause. The button stays at the top right. Resume, read notes, or abandon.
+                Abandon keeps gold already banked.
+  HIDE WEAPONS  slides the weapon tray down so the field gets taller.
+                The ship icon and weapon glyphs sit on that tray, one side each,
+                and move down with it. That is the layout from the design document.
+  Upgrade cards appear on their own. You cannot dismiss them without a pick.
+
+Keyboard
+  F1 or `       balance console
+  Esc           pause or resume
+  Enter / Space activate the focused button
+
+Sound is synthesized and starts after the first tap or click, which mobile
+requires. Railgun is a crack, missiles a whoosh, laser a clean pulse, tesla
+a buzz with pops, the flamethrower a roar, and drones a short chirp.
+The volume slider is in Settings, and again on the pause screen during a run.
+Minus and plus step it by 5%. 0% mutes. Turn screen shake off there if you prefer a still camera.
+
+The layout scales with the resolution. 1280px wide is 1×. A 1920-wide monitor
+draws at 1.5× and a 3840-wide monitor at 3×. The ship, enemies, shots, drones,
+weapon icons, and menu type all follow that scale. A window under 960px wide
+stays 1:1 so a phone does not shrink the text away.
+
+The battlefield is 1000 wide by 3000 long. The lane is mapped onto the battle
+view, and the ships are sized from the view width so they stay readable at
+every resolution in the settings list.
+
+The web build is the Godot game exported for HTML5 with threads off,
+so it runs inside a normal browser on a phone or a desktop without special headers.
+The Godot project source is the game. Open project.godot in Godot 4.7 if you
+want a native mobile or desktop export later.

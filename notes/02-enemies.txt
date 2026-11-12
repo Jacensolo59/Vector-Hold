@@ -1,0 +1,113 @@
+ENEMIES
+
+Four geometric ships. Round 1 uses the written base. Each later round adds one step,
+so "base + per round" means base + per * (round - 1). Percentage stats are the
+number of percent, so 1 means +1% of the base each round after the first:
+
+  value = base * (1 + percent / 100 * (round - 1))
+
+The number under each ship is its defense this round. Round 1 uses the base.
+Each later round adds the listed percent of that base. A circle is 10 on round 1
+and 10.9 on round 10.
+Forward speed is how fast they come down. Side speed is how fast they weave.
+Each one keeps its own lane. The hull is the full bottom edge, just above the weapon tray.
+The approach is long enough to shoot, and short enough that a round is a fight
+rather than a minute of empty space.
+
+HULL CURVE
+Round 1 uses the written hull. Each later round also multiplies hull by
+enemy.hp_curve. The first enemy.hp_grace rounds stay close to the written
+stats. After that, enemy.hp_bend lifts the exponent. Attack uses enemy.atk_curve
+with no bend. Defense, the number under each ship, uses enemy.def_curve the
+same way as hull, with its own grace and bend.
+
+A match level is only a small damage bump. It will not carry a run.
+With no research the opening is comfortable, the round-10 boss is a spike,
+and the line breaks in the mid to high teens. In-match cards push that a
+little. Research is what clears rounds this account could not clear before.
+The bend still beats a fully researched ship if the run goes deep, so the
+next deploy is always trying for a higher best round.
+
+HEX BOSS
+  One hexagon comes down the center on every 10th round (10, 20, 30...).
+  Hull 420 + 18 per round, then the shared hull curve and the boss-round bonus.
+  Defense 80, then the defense curve. Slower than the others.
+  Attack 30, then the attack curve. Melee.
+  Each boss round also adds 10% hull to every enemy, including the boss.
+  That bonus stacks and lasts until the match ends. Round 10 is +10%.
+  Round 20 is +20%. A new match clears it.
+  The first boss is a spike you can survive. Later bosses are the run's wall.
+
+CIRCLE  basic
+  Hull 10 + 2.4 per round
+  Defense 10, then the defense curve
+  Forward 240
+  Side 145
+  Attack 9, then the attack curve
+  Range melee
+
+SQUARE  tank
+  Hull 48 + 6.5 per round
+  Defense 28, then the defense curve
+  Forward 155
+  Side 95
+  Attack 12, then the attack curve
+  Range melee
+
+TRIANGLE  fast
+  Hull 14 + 1.3 per round
+  Defense 5, then the defense curve
+  Forward 420
+  Side 250
+  Attack 15, then the attack curve
+  Range melee
+
+RECTANGLE  ranged
+  Hull 26 + 3.2 per round
+  Defense 14, then the defense curve
+  Forward 250
+  Side 150
+  Attack 16, then the attack curve
+  Range 1400. They stop and shoot. The railgun, laser, and tesla
+  prefer whoever will hurt the hull soonest, so a shooter is not ignored
+  just because a circle is closer.
+
+Colors are only so you can tell them apart: cyan circles, amber squares, red triangles,
+violet rectangles, gold hexes, green diamonds, orange chevrons, white crosses, yellow mines.
+
+DIAMOND  splitter, from round 3
+  Slow. On death it breaks into two small circles that keep coming from where it died.
+  Those pieces have 45% of a circle's hull, attack, gold, and XP, and they do not split.
+
+CHEVRON  guard, from round 6, only after Tesla is unlocked
+  It does not appear in a match until the account has unlocked the tesla.
+  The first hit each second is ignored, unless the ship is stunned.
+  A tesla stun opens it. Conductive then makes the hits that land hurt more.
+
+CROSS  support, from round 7
+  It does not attack. It moves onto the ship with the most hull left and restores
+  6% of that ship's max hull each second. Kill it or the tank and the hex boss outlast the round.
+  A stun freezes the healing.
+
+MINE  timed hull hit, from round 8
+  It does not shoot and it does not ram. Partway down the lane it arms.
+  1.35 seconds later the hull takes the hit, even if you killed the mine after it armed.
+  Killing it before it arms stops the blast. You get no gold if it goes off on its own.
+
+ROUND TYPES
+  Convoy, every 3rd round that is not a boss or an escort. The wave spawns in a
+  tight pack in the middle of the lane.
+  Escort, the round before each boss. Most of the wave is rectangles, plus two extra.
+  Marked, one ship each round from round 6. An amber ring, double hull, double gold and XP.
+  The hex boss is never the marked ship.
+
+Wave mix is a design fill. The document lists the ships but not how many spawn.
+Defaults in balance_data.gd under waves.* :
+  Circles from round 1, 5 + 0.9 per round after.
+  Triangles from round 2.
+  Rectangles from round 4.
+  Squares from round 5.
+Spawn spacing starts at 0.72s and tightens slowly, never faster than spawn_interval_min.
+Alive ships are capped by waves.max_alive so a typo in the console cannot freeze the tab.
+
+The DEV console can spawn one of each type into the current round immediately.

@@ -1,0 +1,72 @@
+RESEARCH AND ACT LEVEL
+
+Gold is earned on each kill and saved immediately, even if the hull breaks
+or you abandon the run. Spend it from the Research button on the main screen.
+There is no shop inside a match.
+
+Act XP uses the same kill XP values as the match, added to a lifetime total.
+The main screen, the battle HUD, pause, and the defeat screen show how far
+the current act has filled. Act level starts at 1.
+XP to leave an act = xp.act_base + xp.act_per_level * act level.
+That curve is long on purpose. Missiles are a few sessions in, not a few minutes.
+The last weapon is a milestone, not the end of the game. Act level keeps climbing
+after every weapon is unlocked.
+
+THE WAY HOME
+Each act is one stretch of the same trip: through their territory, toward home.
+The line is on the main screen, under the act bar, and again when you pause or the hull breaks.
+  1 Outer Dark       railgun only. You are pointed home and still in their sky.
+  2 The Picket       missiles, taken off the first patrol line.
+  3 The Belt         the laser, cut from a dead hull.
+  4 Charged Space    the tesla, rigged from the storms. Their guards answer.
+  5 The Wing         two drones fall back into your formation.
+  6 Inner Burn       the flamethrower, for ships that get inside the guns.
+  7 The Approaches   every weapon is online. Their beacons are still firing.
+  8 Harbor Light     home is on the scope. The last stretch does not open itself.
+After that the acts rotate three closing lines: The Door, The Signal, Last Lane.
+You can see it. They still hold the space in front of it.
+
+Act level does not raise weapon damage. That is research.
+Match level, the bar inside a run, is only a small damage bump. It will not
+outrun the enemies. Each act after the first does add hull and defense to every future run
+(player.hull_per_act, player.defense_per_act). That mastery is why a hundredth
+hour still changes the next deploy.
+
+DAMAGE RESEARCH
+Each weapon has a damage multiplier track.
+  +2% damage per rank
+  cap 80 ranks
+  first rank costs 350 gold
+  each rank the price rises 6.2%
+  every 10 ranks, that rise itself grows by another 1.4%
+A fresh run pays for a few ranks. Deep runs pay for one expensive rank.
+Buying the cheapest rank across weapons stays useful for a very long time.
+Finishing every track is not the expected evening.
+
+  cost starts at research.damage_start
+  for each rank already owned:
+      band = owned_rank / 10
+      cost = cost * (1 + damage_inc + damage_band_inc * band)
+  the price you pay is that cost, rounded up
+
+RAILGUN PENETRATION
+Separate from railgun damage.
+  +0.5% defense penetration per rank (the fraction 0.005)
+  Cap 40, which is 20% of enemy defense ignored
+  Starts at 600 gold and climbs faster than damage research
+  This is the answer to squares and the hex boss, not a dump stat.
+
+MISSILE EDGE
+  Edge damage starts at 25% of the center hit.
+  Each rank adds 0.5 percentage points (0.005).
+  At rank 60 the edge is 55%.
+  Price uses the same gold curve as damage research.
+
+LASER, TESLA, DRONES, FLAMETHROWER
+The document leaves their research sections blank aside from the shared damage track.
+Only that shared +2% track is implemented for them.
+
+A weapon's research stays locked until the matching act unlock, except the railgun.
+Buying is disabled when you cannot afford it or the track is capped.
+Reset Progress in Settings erases gold, act XP, research, and best round on this device.
+Balance overrides are separate and are cleared from the DEV console's RESET button.

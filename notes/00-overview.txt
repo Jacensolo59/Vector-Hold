@@ -1,0 +1,34 @@
+VECTOR HOLD
+Tower defense, brought back to basic. No ads.
+
+You hold a line in deep space. Ships only come from in front of you.
+Your railgun, and later the weapons you arm, fire on their own.
+You do not steer and you cannot shoot behind the hull line.
+
+A run:
+1. Deploy from the main screen.
+2. Survive rounds. Killing ships grants match XP and gold.
+3. Every even match level, pick 1 of 3 upgrades. The run pauses.
+4. If the hull hits zero, the run ends. Gold already earned stays.
+5. Spend gold in Research. That progress stays on this device.
+   Damage ranks are the long game. One run buys a little. A deep run buys one
+   expensive rank. There is always a next purchase.
+6. Act level, from lifetime XP, unlocks weapons slowly, then keeps adding a
+   little hull and defense to every future run. Each act is one stretch of
+   the trip home, through their territory. The line is under the act bar.
+
+Where the code lives:
+- scripts/formulas.gd        pure math, safe to retune and test
+- scripts/balance_data.gd    every default number and the dev-console rows
+- scripts/balance.gd         defaults plus your saved overrides
+- scripts/profile.gd         gold, act level, research
+- scripts/battle.gd          the match: spawns, weapons, damage, UI
+- scripts/field_view.gd      line-art drawing only
+- scripts/dev_console.gd     the balance console
+- scripts/main.gd            menu, research, settings, these notes
+- scripts/shapes.gd          geometric ship and enemy outlines
+- scripts/sfx.gd             synthesized beeps, no audio files
+- scripts/self_test.gd       checks the formulas against the design doc
+
+Read the other notes in this folder for enemies, weapons, upgrades, research, and the console.
+The same files are the Field Notes screen inside the game.

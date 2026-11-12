@@ -1,0 +1,50 @@
+CODE MAP
+
+Battle.gd is the match. _process accumulates time and calls _simulate at 1/60
+second steps, up to 8 steps a frame, so a hitch does not teleport ships.
+Balance.sim_speed repeats that accumulation. The dev console and upgrade
+cards set dev_hold or menu_hold and the accumulator is dropped, so the pause
+does not dump a huge delta when you come back.
+
+_simulate order
+  1. Spawn from the round queue, or finish the between-round wait
+  2. Weapon cooldowns: rail, missile, tesla, laser, flame
+  3. Projectiles (a snapshot, so split missiles born this frame wait until next)
+  4. Drones
+  5. Enemy movement, rectangle shots, melee rams
+  6. A light separation push so ships do not stack into one dot
+  7. Age floaters, sparks, and arcs
+  8. If the queue is empty and nobody is alive, start the between-round timer
+
+Damage path
+  deal() applies a chevron block, then conductive if the ship is stunned,
+  then shred, then formulas.mitigate. kill_enemy banks gold and both kinds of XP.
+  A diamond splits into two small circles. An armed mine keeps its fuse.
+  A laser kill with the explode rank hurts neighbors with cause "explode".
+  hurt() is the only way the player hull drops. God mode returns immediately.
+
+Drawing
+  field_view.gd does not simulate. It maps the 1000 by 3000 field into the
+  open rectangle between the HUD and the tray with one uniform scale, so the
+  aspect stays correct in portrait and landscape. Lines are drawn in screen
+  pixels.
+  screen_fit.gd reads the window size, picks a logical resolution, and on PC
+  maximizes onto the monitor. main.gd rebuilds menu column widths from that.
+  shapes.gd draws the player as a triangle aimed up the field. A barrel line
+  sticks out just past the tip, and the rail bolt and muzzle flash start
+  just before that end, not at the center of the triangle.
+  No generated artwork. Stars are a seeded scatter in starfield.gd.
+
+UI
+  main.gd builds menus in code. There is no scene per screen, only scenes/main.tscn
+  as the entry Control. Buttons come from ui_kit.gd so height, type, and color
+  stay consistent. Colors are the dark field, cyan line, amber action, and red danger.
+  Enemy hues are extra on purpose: they are how you read the four ship types.
+
+Save files
+  Written with FileAccess to user:// which Godot maps to browser storage in the
+  web export and to the app data folder in a native export.
+
+If you change a formula, run scripts/self_test.gd headless before you trust it.
+The test does not start a match. It only checks numbers and that this notes
+folder can be opened.
